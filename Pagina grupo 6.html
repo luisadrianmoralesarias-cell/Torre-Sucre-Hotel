@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio – Grupo 6 Los de Siempre | Hotel Torre Sucre</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C; --gold-light: #F0D98A; --gold-dark: #8B6914;
+    --navy: #0D1B2A; --navy-mid: #1A2E45; --cream: #FAF8F3;
+    --text: #1C1C1C; --text-muted: #6B6055; --white: #FFFFFF;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(13,27,42,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.25); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: rgba(255,255,255,0.75); font-size: 0.85rem; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .hero { min-height: 100vh; background: var(--navy); display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-bg-pattern { position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, rgba(201,168,76,0.04) 0px, rgba(201,168,76,0.04) 1px, transparent 1px, transparent 60px); }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 8rem 4rem 4rem 5rem; position: relative; z-index: 2; }
+  .hero-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.4); padding: 0.4rem 1rem; border-radius: 2px; margin-bottom: 2rem; width: fit-content; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem,5vw,4.5rem); font-weight: 700; color: var(--white); line-height: 1.05; margin-bottom: 0.5rem; }
+  .hero-name span { color: var(--gold); }
+  .hero-title { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.55); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2.5rem; }
+  .hero-desc { font-size: 1rem; line-height: 1.8; color: rgba(255,255,255,0.7); max-width: 440px; margin-bottom: 3rem; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--navy); text-decoration: none; padding: 0.85rem 2rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: rgba(255,255,255,0.8); text-decoration: none; padding: 0.85rem 2rem; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-right { display: flex; align-items: center; justify-content: center; padding: 8rem 4rem 4rem; position: relative; z-index: 2; }
+  .hotel-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.3); padding: 2.5rem; width: 100%; max-width: 380px; position: relative; }
+  .hotel-card::before { content: ''; position: absolute; top: -1px; left: 2rem; right: 2rem; height: 2px; background: var(--gold); }
+  .hotel-card-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .hotel-card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); margin-bottom: 0.5rem; }
+  .hotel-card-sub { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 2rem; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.15); margin-bottom: 1.5rem; }
+  .stat-item { padding: 1.2rem; background: var(--navy-mid); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+  .stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.45); letter-spacing: 0.05em; text-transform: uppercase; }
+  .badge-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .badge { font-size: 0.7rem; padding: 0.3rem 0.75rem; background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); letter-spacing: 0.04em; }
+  #intro { padding: 7rem 5rem; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 1.5rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,3.5vw,2.8rem); color: var(--navy); line-height: 1.2; margin-bottom: 1.5rem; }
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+  .intro-text p { font-size: 1rem; line-height: 1.85; color: var(--text-muted); margin-bottom: 1.2rem; }
+  .intro-text p strong { color: var(--text); font-weight: 500; }
+  .highlights { display: flex; flex-direction: column; gap: 1rem; }
+  .highlight-item { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.25rem 1.5rem; background: var(--white); border: 1px solid rgba(0,0,0,0.07); border-left: 3px solid var(--gold); }
+  .highlight-icon { font-size: 1.2rem; flex-shrink: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(201,168,76,0.1); color: var(--gold-dark); font-family: monospace; font-size: 0.9rem; font-weight: 700; }
+  .highlight-content h4 { font-weight: 500; font-size: 0.92rem; color: var(--navy); margin-bottom: 0.3rem; }
+  .highlight-content p { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+  .timeline-section { background: var(--navy); padding: 6rem 5rem; }
+  .timeline-inner { max-width: 1100px; margin: 0 auto; }
+  .timeline-section .section-label { color: rgba(201,168,76,0.7); }
+  .timeline-section .section-title { color: var(--white); }
+  .timeline { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 0; margin-top: 3rem; border: 1px solid rgba(201,168,76,0.2); }
+  .timeline-step { padding: 2rem 1.5rem; border-right: 1px solid rgba(201,168,76,0.15); position: relative; }
+  .timeline-step:last-child { border-right: none; }
+  .step-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: rgba(201,168,76,0.2); line-height: 1; margin-bottom: 0.75rem; }
+  .step-weeks { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .step-title { font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.85); line-height: 1.4; }
+  footer { text-align: center; padding: 2.5rem; border-top: 1px solid rgba(0,0,0,0.08); font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.04em; }
+  footer span { color: var(--gold-dark); }
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { gap: 1.2rem; }
+    .hero { grid-template-columns: 1fr; } .hero-left { padding: 7rem 2rem 2rem; } .hero-right { padding: 2rem; }
+    #intro { padding: 4rem 2rem; } .intro-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .timeline-section { padding: 4rem 2rem; }
+  }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Grupo 6 &middot; Los de Siempre</div>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#intro">Proyecto</a></li>
+    <li><a href="#timeline">Planificaci&oacute;n</a></li>
+    <li><a href="#fase2">Fase 2</a></li>
+    <li><a href="#conclusiones">Conclusiones</a></li>
+  </ul>
+</nav>
+<section class="hero" id="inicio">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-left">
+    <span class="hero-tag">Portafolio Acad&eacute;mico &middot; 2025</span>
+    <h1 class="hero-name">Hola, somos<br><span>Grupo 6</span></h1>
+    <p class="hero-title">Los de Siempre &middot; Gesti&oacute;n de Tecnolog&iacute;as de la Informaci&oacute;n</p>
+    <p class="hero-desc">Somos 3 estudiantes de tecnolog&iacute;a enfocados en el desarrollo de sistemas de informaci&oacute;n. Este portafolio documenta nuestro Proyecto Integrador: un sistema web para optimizar el registro de hu&eacute;spedes del Hotel Torre Sucre.</p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#intro">Ver el Proyecto</a>
+      <a class="btn-outline" href="#timeline">Planificaci&oacute;n</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hotel-card">
+      <p class="hotel-card-label">Proyecto Integrador &middot; Semana 1</p>
+      <h2 class="hotel-card-title">Hotel Torre Sucre</h2>
+      <p class="hotel-card-sub">Sistema de Informaci&oacute;n para Registro de Hu&eacute;spedes</p>
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-num">59</div><div class="stat-label">Habitaciones</div></div>
+        <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Semanas</div></div>
+        <div class="stat-item"><div class="stat-num">60%</div><div class="stat-label">Reducci&oacute;n en check-in</div></div>
+        <div class="stat-item"><div class="stat-num">90%</div><div class="stat-label">Menos errores</div></div>
+      </div>
+      <div class="badge-row">
+        <span class="badge">Sistema Web</span>
+        <span class="badge">Base de Datos</span>
+        <span class="badge">MySQL</span>
+        <span class="badge">UI/UX</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="intro">
+  <p class="section-label fade-up">Introducci&oacute;n</p>
+  <h2 class="section-title fade-up">&iquest;De qu&eacute; trata el proyecto?</h2>
+
+  <div class="intro-grid">
+    <div class="intro-text fade-up">
+      <p>En la actualidad, los sistemas de informaci&oacute;n son herramientas fundamentales para la gesti&oacute;n eficiente de los negocios hoteleros. La incorporaci&oacute;n de tecnolog&iacute;a permite mejorar la experiencia del hu&eacute;sped y <strong>optimizar los recursos humanos y materiales</strong> del establecimiento.</p>
+      <p>El <strong>Hotel Torre Sucre</strong>, con 59 habitaciones distribuidas en distintas categor&iacute;as, enfrenta serias deficiencias en su proceso de registro manual: check-ins de ~10 minutos, errores frecuentes en datos de clientes, imposibilidad de conocer la disponibilidad en tiempo real y reportes que la gerencia no puede obtener a tiempo.</p>
+      <p>Este proyecto propone el an&aacute;lisis, dise&ntilde;o y desarrollo de un <strong>sistema de informaci&oacute;n web</strong> que automatice el registro de hu&eacute;spedes, el control de habitaciones y la generaci&oacute;n de reportes operativos &mdash; transformando un proceso manual en una soluci&oacute;n digital moderna.</p>
+    </div>
+
+    <div class="highlights fade-up">
+
+      <!-- 01 · Diagnóstico del Problema -->
+      <div class="highlight-item" style="flex-direction:column;gap:0;">
+        <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+          <div class="highlight-icon">01</div>
+          <div class="highlight-content">
+            <h4>Diagn&oacute;stico del Problema &mdash; Ishikawa</h4>
+            <p>El Diagrama de Ishikawa organiza las causas de la ineficiencia del registro en <strong>seis categor&iacute;as</strong>: M&eacute;todos (sin procedimiento est&aacute;ndar, registros en papel), Personas (falta de capacitaci&oacute;n, alta rotaci&oacute;n), Tecnolog&iacute;a (sin sistema hotelero, equipos obsoletos), Procesos (check-in lento, asignaci&oacute;n manual), Informaci&oacute;n (datos sin estructura, sin historial) y Equipos (computadoras insuficientes, internet inestable). Todas las espinas apuntan a una misma ra&iacute;z: <strong>la ausencia de un sistema de informaci&oacute;n integrado</strong>.</p>
+          </div>
+        </div>
+        
+      <!-- GRÁFICO 01: Ishikawa -->
+      <div class="fade-up" style="margin-top:1.25rem;background:var(--navy);padding:1.25rem;border:1px solid rgba(201,168,76,0.2);">
+        <p style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(201,168,76,0.7);margin-bottom:1rem;">Diagrama de Ishikawa — Causas del Registro Ineficiente</p>
+        <svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#C9A84C"/>
+            </marker>
+          </defs>
+          <!-- espina central -->
+          <line x1="60" y1="170" x2="730" y2="170" stroke="#C9A84C" stroke-width="3" marker-end="url(#arr)"/>
+          <!-- cabeza (efecto) -->
+          <rect x="730" y="140" width="78" height="60" rx="4" fill="#C9A84C"/>
+          <text x="769" y="163" text-anchor="middle" font-family="serif" font-size="9" fill="#0D1B2A" font-weight="bold">Registro</text>
+          <text x="769" y="175" text-anchor="middle" font-family="serif" font-size="9" fill="#0D1B2A" font-weight="bold">Ineficiente</text>
+          <text x="769" y="187" text-anchor="middle" font-family="serif" font-size="9" fill="#0D1B2A" font-weight="bold">de Huéspedes</text>
+
+          <!-- ── RAMAS SUPERIORES ── -->
+          <!-- MÉTODOS (izq-sup) -->
+          <line x1="160" y1="80" x2="230" y2="170" stroke="#C9A84C" stroke-width="2"/>
+          <text x="100" y="68" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#C9A84C" font-weight="bold">Métodos</text>
+          <line x1="130" y1="110" x2="160" y2="80" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="55" y="108" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Sin procedimiento</text>
+          <line x1="150" y1="95" x2="160" y2="80" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="90" y="93" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Reg. en papel</text>
+          <line x1="170" y1="78" x2="160" y2="80" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="175" y="68" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Sin protocolo</text>
+
+          <!-- PERSONAS (centro-sup) -->
+          <line x1="340" y1="75" x2="390" y2="170" stroke="#C9A84C" stroke-width="2"/>
+          <text x="295" y="63" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#C9A84C" font-weight="bold">Personas</text>
+          <line x1="305" y1="100" x2="340" y2="75" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="240" y="97" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Sin capacitación</text>
+          <line x1="330" y1="85" x2="340" y2="75" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="300" y="82" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Alta rotación</text>
+
+          <!-- TECNOLOGÍA (der-sup) -->
+          <line x1="530" y1="78" x2="560" y2="170" stroke="#C9A84C" stroke-width="2"/>
+          <text x="490" y="66" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#C9A84C" font-weight="bold">Tecnología</text>
+          <line x1="490" y1="100" x2="530" y2="78" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="430" y="97" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Sin sistema PMS</text>
+          <line x1="520" y1="88" x2="530" y2="78" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="490" y="85" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Equipos obsoletos</text>
+
+          <!-- ── RAMAS INFERIORES ── -->
+          <!-- PROCESOS (izq-inf) -->
+          <line x1="160" y1="260" x2="230" y2="170" stroke="#C9A84C" stroke-width="2"/>
+          <text x="100" y="278" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#C9A84C" font-weight="bold">Procesos</text>
+          <line x1="130" y1="234" x2="160" y2="260" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="60" y="232" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Check-in lento</text>
+          <line x1="155" y1="248" x2="160" y2="260" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="100" y="255" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Asignación manual</text>
+
+          <!-- INFORMACIÓN (centro-inf) -->
+          <line x1="340" y1="265" x2="390" y2="170" stroke="#C9A84C" stroke-width="2"/>
+          <text x="295" y="283" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#C9A84C" font-weight="bold">Información</text>
+          <line x1="305" y1="240" x2="340" y2="265" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="240" y="242" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Sin historial</text>
+          <line x1="330" y1="252" x2="340" y2="265" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="300" y="260" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Datos sin estructura</text>
+
+          <!-- EQUIPOS (der-inf) -->
+          <line x1="530" y1="262" x2="560" y2="170" stroke="#C9A84C" stroke-width="2"/>
+          <text x="490" y="280" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#C9A84C" font-weight="bold">Equipos</text>
+          <line x1="490" y1="238" x2="530" y2="262" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="430" y="242" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">PCs insuficientes</text>
+          <line x1="520" y1="250" x2="530" y2="262" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <text x="485" y="258" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.7)">Internet inestable</text>
+        </svg>
+      </div>
+      </div>
+
+      <!-- 02 · Lluvia de Ideas -->
+      <div class="highlight-item" style="flex-direction:column;gap:0;">
+        <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+          <div class="highlight-icon">02</div>
+          <div class="highlight-content">
+            <h4>Lluvia de Ideas &mdash; 15 Soluciones Tecnol&oacute;gicas</h4>
+            <p>Mediante brainstorming se generaron 15 soluciones: <strong>sistema web de registro digital</strong>, base de datos centralizada, automatizaci&oacute;n de check-in/check-out, panel de disponibilidad en tiempo real, reservas en l&iacute;nea, reportes autom&aacute;ticos, app m&oacute;vil para pre-check-in, alertas al personal, gesti&oacute;n de tarifas diferenciadas, control de estados de habitaci&oacute;n, facturaci&oacute;n electr&oacute;nica, m&oacute;dulo de servicios adicionales, escaneo de documentos de identidad, fidelizaci&oacute;n de clientes y dashboard gerencial.</p>
+          </div>
+        </div>
+        
+      <!-- GRÁFICO 02: Lluvia de Ideas -->
+      <div class="fade-up" style="margin-top:1.25rem;background:var(--navy);padding:1.25rem;border:1px solid rgba(201,168,76,0.2);">
+        <p style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(201,168,76,0.7);margin-bottom:1rem;">15 Soluciones Tecnológicas — Lluvia de Ideas</p>
+        <svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <!-- nodo central -->
+          <circle cx="410" cy="210" r="52" fill="#C9A84C"/>
+          <text x="410" y="204" text-anchor="middle" font-family="serif" font-size="11" fill="#0D1B2A" font-weight="bold">Hotel</text>
+          <text x="410" y="217" text-anchor="middle" font-family="serif" font-size="11" fill="#0D1B2A" font-weight="bold">Torre</text>
+          <text x="410" y="230" text-anchor="middle" font-family="serif" font-size="11" fill="#0D1B2A" font-weight="bold">Sucre</text>
+
+          <!-- ideas: cx,cy, texto, línea desde centro -->
+          <!-- 1 -->
+          <line x1="410" y1="210" x2="200" y2="55" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="105" y="30" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="180" y="48" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">01 · Sistema web</text>
+          <text x="180" y="59" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">de registro digital</text>
+
+          <!-- 2 -->
+          <line x1="410" y1="210" x2="370" y2="38" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="295" y="14" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="370" y="33" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">02 · Base de datos</text>
+          <text x="370" y="44" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">centralizada</text>
+
+          <!-- 3 -->
+          <line x1="410" y1="210" x2="555" y2="45" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="480" y="20" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="555" y="38" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">03 · Check-in/out</text>
+          <text x="555" y="49" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">automatizado</text>
+
+          <!-- 4 -->
+          <line x1="410" y1="210" x2="690" y2="100" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="618" y="76" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="693" y="94" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">04 · Panel de</text>
+          <text x="693" y="105" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">disponibilidad</text>
+
+          <!-- 5 -->
+          <line x1="410" y1="210" x2="760" y2="190" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="688" y="168" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="763" y="186" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">05 · Reservas</text>
+          <text x="763" y="197" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">en línea</text>
+
+          <!-- 6 -->
+          <line x1="410" y1="210" x2="700" y2="300" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="628" y="278" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="703" y="296" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">06 · Reportes</text>
+          <text x="703" y="307" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">automáticos</text>
+
+          <!-- 7 -->
+          <line x1="410" y1="210" x2="560" y2="375" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="488" y="354" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="563" y="372" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">07 · App móvil</text>
+          <text x="563" y="383" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">pre-check-in</text>
+
+          <!-- 8 -->
+          <line x1="410" y1="210" x2="370" y2="392" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="295" y="370" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="370" y="388" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">08 · Alertas</text>
+          <text x="370" y="399" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">automáticas</text>
+
+          <!-- 9 -->
+          <line x1="410" y1="210" x2="200" y2="375" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="108" y="353" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="183" y="371" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">09 · Gestión de</text>
+          <text x="183" y="382" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">tarifas</text>
+
+          <!-- 10 -->
+          <line x1="410" y1="210" x2="80" y2="300" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="8" y="278" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="83" y="296" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">10 · Control estado</text>
+          <text x="83" y="307" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">habitaciones</text>
+
+          <!-- 11 -->
+          <line x1="410" y1="210" x2="55" y2="195" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="-17" y="173" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="58" y="191" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">11 · Facturación</text>
+          <text x="58" y="202" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">electrónica</text>
+
+          <!-- 12 -->
+          <line x1="410" y1="210" x2="100" y2="105" stroke="rgba(201,168,76,0.35)" stroke-width="1.3"/>
+          <rect x="28" y="82" width="150" height="32" rx="3" fill="#1A2E45" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <text x="103" y="100" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">12 · Servicios</text>
+          <text x="103" y="111" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">adicionales</text>
+
+          <!-- 13 badge dorado especial -->
+          <line x1="410" y1="210" x2="648" y2="158" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <rect x="580" y="140" width="150" height="28" rx="3" fill="rgba(201,168,76,0.15)" stroke="#C9A84C" stroke-width="1.2"/>
+          <text x="655" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#C9A84C" font-weight="bold">13 · Escaneo de docs</text>
+
+          <!-- 14 badge dorado especial -->
+          <line x1="410" y1="210" x2="648" y2="262" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <rect x="580" y="248" width="150" height="28" rx="3" fill="rgba(201,168,76,0.15)" stroke="#C9A84C" stroke-width="1.2"/>
+          <text x="655" y="266" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#C9A84C" font-weight="bold">14 · Fidelización</text>
+
+          <!-- 15 badge dorado especial -->
+          <line x1="410" y1="210" x2="270" y2="330" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <rect x="195" y="316" width="150" height="28" rx="3" fill="rgba(201,168,76,0.15)" stroke="#C9A84C" stroke-width="1.2"/>
+          <text x="270" y="334" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#C9A84C" font-weight="bold">15 · Dashboard</text>
+        </svg>
+      </div>
+      </div>
+
+      <!-- 03 · Objetivo SMART -->
+      <div class="highlight-item" style="flex-direction:column;gap:0;">
+        <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+          <div class="highlight-icon">03</div>
+          <div class="highlight-content">
+            <h4>Objetivo SMART</h4>
+            <p><em>Digitalizar el registro de hu&eacute;spedes del Hotel Torre Sucre para que el check-in sea r&aacute;pido, los datos confiables y la disponibilidad visible en tiempo real.</em> Metas medibles: <strong>reducir el check-in de 10 a menos de 4 minutos</strong> (&minus;60%), eliminar el <strong>90% de errores</strong> mediante validaci&oacute;n autom&aacute;tica, y consultar el estado de las 59 habitaciones en <strong>menos de 5 segundos</strong>.</p>
+          </div>
+        </div>
+        
+      <!-- GRÁFICO 03: Objetivo SMART -->
+      <div class="fade-up" style="margin-top:1.25rem;background:var(--navy);padding:1.25rem;border:1px solid rgba(201,168,76,0.2);">
+        <p style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(201,168,76,0.7);margin-bottom:1rem;">Objetivo SMART — Metas Medibles</p>
+        <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <!-- Fila encabezado -->
+          <rect x="10" y="10" width="800" height="36" rx="3" fill="#C9A84C"/>
+          <text x="210" y="33" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0D1B2A" font-weight="bold">Meta Medible</text>
+          <text x="490" y="33" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0D1B2A" font-weight="bold">Indicador</text>
+          <text x="720" y="33" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0D1B2A" font-weight="bold">Resultado Esperado</text>
+          <!-- separadores -->
+          <line x1="380" y1="10" x2="380" y2="46" stroke="#0D1B2A" stroke-width="1.5"/>
+          <line x1="600" y1="10" x2="600" y2="46" stroke="#0D1B2A" stroke-width="1.5"/>
+
+          <!-- ── FILA 1: Tiempo de check-in ── -->
+          <rect x="10" y="46" width="800" height="64" rx="0" fill="#1A2E45"/>
+          <line x1="380" y1="46" x2="380" y2="110" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <line x1="600" y1="46" x2="600" y2="110" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <line x1="10" y1="110" x2="810" y2="110" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+          <!-- texto col 1 -->
+          <text x="210" y="67" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.9)">Tiempo de check-in</text>
+          <!-- barra col 2 -->
+          <text x="420" y="62" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Actual: 10 min</text>
+          <rect x="415" y="68" width="140" height="10" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="415" y="68" width="140" height="10" rx="3" fill="rgba(192,57,43,0.6)"/>
+          <text x="420" y="92" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Objetivo: &lt;4 min</text>
+          <rect x="415" y="98" width="56" height="10" rx="3" fill="#C9A84C"/>
+          <!-- col 3 -->
+          <text x="720" y="67" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#C9A84C" font-weight="bold">−60%</text>
+          <text x="720" y="82" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">De 10 min → &lt;4 min</text>
+          <text x="720" y="97" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">por huésped</text>
+
+          <!-- ── FILA 2: Errores de registro ── -->
+          <rect x="10" y="110" width="800" height="64" rx="0" fill="#0D1B2A"/>
+          <line x1="380" y1="110" x2="380" y2="174" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <line x1="600" y1="110" x2="600" y2="174" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <line x1="10" y1="174" x2="810" y2="174" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+          <text x="210" y="131" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.9)">Errores de registro</text>
+          <text x="420" y="126" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Actual: alto</text>
+          <rect x="415" y="132" width="140" height="10" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="415" y="132" width="140" height="10" rx="3" fill="rgba(192,57,43,0.6)"/>
+          <text x="420" y="156" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Objetivo: mín.</text>
+          <rect x="415" y="162" width="14" height="10" rx="3" fill="#C9A84C"/>
+          <text x="720" y="131" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#C9A84C" font-weight="bold">−90%</text>
+          <text x="720" y="146" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">Validación automática</text>
+          <text x="720" y="161" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">de datos en el sistema</text>
+
+          <!-- ── FILA 3: Disponibilidad ── -->
+          <rect x="10" y="174" width="800" height="64" rx="0" fill="#1A2E45"/>
+          <line x1="380" y1="174" x2="380" y2="238" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <line x1="600" y1="174" x2="600" y2="238" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <text x="210" y="195" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.9)">Consulta de</text>
+          <text x="210" y="208" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.9)">disponibilidad</text>
+          <text x="420" y="190" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Actual: lenta / manual</text>
+          <rect x="415" y="196" width="140" height="10" rx="3" fill="rgba(255,255,255,0.1)"/>
+          <rect x="415" y="196" width="140" height="10" rx="3" fill="rgba(192,57,43,0.6)"/>
+          <text x="420" y="220" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.6)">Objetivo: &lt;5 seg</text>
+          <rect x="415" y="226" width="7" height="10" rx="3" fill="#C9A84C"/>
+          <text x="720" y="195" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#C9A84C" font-weight="bold">&lt;5 segundos</text>
+          <text x="720" y="210" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">59 habitaciones</text>
+          <text x="720" y="225" text-anchor="middle" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">en tiempo real</text>
+
+          <!-- borde general -->
+          <rect x="10" y="10" width="800" height="228" rx="3" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+        </svg>
+      </div>
+      </div>
+
+      <!-- 04 · Modelo PART -->
+      <div class="highlight-item" style="flex-direction:column;gap:0;">
+        <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+          <div class="highlight-icon">04</div>
+          <div class="highlight-content">
+            <h4>Modelo PART</h4>
+            <p><strong>Problema:</strong> registro manual ineficiente con check-ins lentos y datos err&oacute;neos. <strong>An&aacute;lisis:</strong> Ishikawa + lluvia de ideas identifican la causa ra&iacute;z. <strong>Resultado esperado:</strong> sistema web que reduce tiempos, errores y mejora la toma de decisiones. <strong>Tiempo:</strong> 12 semanas acad&eacute;micas con entregables por etapa, usando metodolog&iacute;a &aacute;gil SCRUM.</p>
+          </div>
+        </div>
+        
+      <!-- GRÁFICO 04: Modelo PART -->
+      <div class="fade-up" style="margin-top:1.25rem;background:var(--navy);padding:1.25rem;border:1px solid rgba(201,168,76,0.2);">
+        <p style="font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(201,168,76,0.7);margin-bottom:1rem;">Modelo PART — Estructura del Proyecto</p>
+        <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <defs>
+            <marker id="arr2" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 9 3.5, 0 7" fill="#C9A84C"/>
+            </marker>
+          </defs>
+
+          <!-- ── CAJA P ── -->
+          <rect x="20" y="30" width="170" height="140" rx="4" fill="#1A2E45" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="20" y="30" width="170" height="34" rx="4" fill="#C9A84C"/>
+          <rect x="20" y="50" width="170" height="14" fill="#C9A84C"/>
+          <text x="105" y="52" text-anchor="middle" font-family="serif" font-size="15" fill="#0D1B2A" font-weight="bold">P</text>
+          <text x="105" y="65" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#0D1B2A" font-weight="bold">PROBLEMA</text>
+          <text x="105" y="90" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Registro manual</text>
+          <text x="105" y="104" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">ineficiente en el</text>
+          <text x="105" y="118" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Hotel Torre Sucre</text>
+          <text x="105" y="132" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">(59 habitaciones)</text>
+          <text x="105" y="155" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(201,168,76,0.6)">check-ins ~10 min</text>
+
+          <!-- flecha P→A -->
+          <line x1="192" y1="100" x2="215" y2="100" stroke="#C9A84C" stroke-width="2" marker-end="url(#arr2)"/>
+
+          <!-- ── CAJA A ── -->
+          <rect x="218" y="30" width="170" height="140" rx="4" fill="#1A2E45" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <rect x="218" y="30" width="170" height="34" rx="4" fill="rgba(201,168,76,0.8)"/>
+          <rect x="218" y="50" width="170" height="14" fill="rgba(201,168,76,0.8)"/>
+          <text x="303" y="52" text-anchor="middle" font-family="serif" font-size="15" fill="#0D1B2A" font-weight="bold">A</text>
+          <text x="303" y="65" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#0D1B2A" font-weight="bold">ANÁLISIS</text>
+          <text x="303" y="90" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Ishikawa: 6 categorías</text>
+          <text x="303" y="104" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Lluvia de ideas:</text>
+          <text x="303" y="118" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">15 soluciones</text>
+          <text x="303" y="132" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Causa raíz identificada</text>
+          <text x="303" y="155" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(201,168,76,0.6)">ausencia de SI</text>
+
+          <!-- flecha A→R -->
+          <line x1="390" y1="100" x2="413" y2="100" stroke="#C9A84C" stroke-width="2" marker-end="url(#arr2)"/>
+
+          <!-- ── CAJA R ── -->
+          <rect x="416" y="30" width="170" height="140" rx="4" fill="#1A2E45" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <rect x="416" y="30" width="170" height="34" rx="4" fill="rgba(201,168,76,0.6)"/>
+          <rect x="416" y="50" width="170" height="14" fill="rgba(201,168,76,0.6)"/>
+          <text x="501" y="52" text-anchor="middle" font-family="serif" font-size="15" fill="#0D1B2A" font-weight="bold">R</text>
+          <text x="501" y="65" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#0D1B2A" font-weight="bold">RESULTADO</text>
+          <text x="501" y="90" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Sistema web hotelero</text>
+          <text x="501" y="104" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">−60% tiempo check-in</text>
+          <text x="501" y="118" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">−90% errores registro</text>
+          <text x="501" y="132" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Disponibilidad real</text>
+          <text x="501" y="155" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(201,168,76,0.6)">59 hab. en &lt;5 seg</text>
+
+          <!-- flecha R→T -->
+          <line x1="588" y1="100" x2="611" y2="100" stroke="#C9A84C" stroke-width="2" marker-end="url(#arr2)"/>
+
+          <!-- ── CAJA T ── -->
+          <rect x="614" y="30" width="186" height="140" rx="4" fill="#1A2E45" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
+          <rect x="614" y="30" width="186" height="34" rx="4" fill="rgba(201,168,76,0.4)"/>
+          <rect x="614" y="50" width="186" height="14" fill="rgba(201,168,76,0.4)"/>
+          <text x="707" y="52" text-anchor="middle" font-family="serif" font-size="15" fill="#FAF8F3" font-weight="bold">T</text>
+          <text x="707" y="65" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#FAF8F3" font-weight="bold">TIEMPO</text>
+          <text x="707" y="90" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">12 semanas académicas</text>
+          <text x="707" y="104" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">4 Sprints SCRUM</text>
+          <text x="707" y="118" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Entregables por etapa</text>
+          <text x="707" y="132" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(255,255,255,0.75)">Presentación final</text>
+          <text x="707" y="155" text-anchor="middle" font-family="sans-serif" font-size="8" fill="rgba(201,168,76,0.6)">Sem. 12 · exposición</text>
+        </svg>
+      </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bloque: Problema Central -->
+  <div class="fade-up" style="margin-top:3rem;padding:1.5rem 2rem;background:var(--navy);border-left:4px solid var(--gold);border-radius:2px;">
+    <p style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;">Problema Central</p>
+    <p style="font-size:1rem;color:rgba(255,255,255,0.85);line-height:1.8;">La falta de un sistema de informaci&oacute;n automatizado que permita gestionar de manera <strong style="color:var(--gold);">eficiente, segura y en tiempo real</strong> el registro de hu&eacute;spedes del Hotel Torre Sucre: desde la recepci&oacute;n inicial hasta el control de las 59 habitaciones y la generaci&oacute;n de reportes operativos.</p>
+  </div>
+
+  <!-- Tabla: Situación actual vs necesidad -->
+  <div class="fade-up" style="margin-top:2rem;overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.86rem;background:var(--white);">
+      <thead>
+        <tr style="background:var(--navy);color:var(--white);">
+          <th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Situaci&oacute;n Actual</th>
+          <th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Consecuencia</th>
+          <th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Necesidad Identificada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);">
+          <td style="padding:0.75rem 1.2rem;color:var(--text);">Registro manual en papel y planillas</td>
+          <td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Check-ins de ~10 min y errores frecuentes de datos</td>
+          <td style="padding:0.75rem 1.2rem;color:var(--navy);font-weight:500;">Registro digital con validaci&oacute;n autom&aacute;tica</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.02);">
+          <td style="padding:0.75rem 1.2rem;color:var(--text);">Consulta manual de habitaciones</td>
+          <td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Sin visibilidad en tiempo real; riesgo de sobreventa</td>
+          <td style="padding:0.75rem 1.2rem;color:var(--navy);font-weight:500;">Panel de disponibilidad en tiempo real</td>
+        </tr>
+        <tr>
+          <td style="padding:0.75rem 1.2rem;color:var(--text);">Informaci&oacute;n dispersa y sin historial</td>
+          <td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Reportes lentos y decisiones sin datos confiables</td>
+          <td style="padding:0.75rem 1.2rem;color:var(--navy);font-weight:500;">Base de datos centralizada y reportes autom&aacute;ticos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Preguntas del Problema -->
+  <div class="fade-up" style="margin-top:3rem;">
+    <p class="section-label" style="margin-bottom:1rem;">Preguntas del Problema</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;">
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid var(--gold);padding:1.25rem;">
+        <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.6rem;">Proceso actual</div>
+        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.7;">&iquest;C&oacute;mo se realiza hoy el registro de hu&eacute;spedes? &middot; &iquest;Cu&aacute;les son los principales cuellos de botella en recepci&oacute;n?</p>
+      </div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid var(--gold);padding:1.25rem;">
+        <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.6rem;">Datos y errores</div>
+        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.7;">&iquest;Qu&eacute; errores ocurren con mayor frecuencia? &middot; &iquest;Qu&eacute; datos son indispensables para registrar correctamente a un hu&eacute;sped?</p>
+      </div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid var(--gold);padding:1.25rem;">
+        <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.6rem;">Habitaciones y disponibilidad</div>
+        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.7;">&iquest;C&oacute;mo se controla el estado de las 59 habitaciones? &middot; &iquest;Con qu&eacute; frecuencia ocurren errores de asignaci&oacute;n?</p>
+      </div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid var(--gold);padding:1.25rem;">
+        <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.6rem;">Experiencia del hu&eacute;sped</div>
+        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.7;">&iquest;Cu&aacute;nto demora en promedio el check-in? &middot; &iquest;C&oacute;mo afecta la ineficiencia actual a la satisfacci&oacute;n del hu&eacute;sped?</p>
+      </div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid var(--gold);padding:1.25rem;">
+        <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.6rem;">Requisitos del sistema</div>
+        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.7;">&iquest;Qu&eacute; requisitos t&eacute;cnicos m&iacute;nimos debe cumplir el sistema? &middot; &iquest;El personal cuenta con capacitaci&oacute;n para operarlo?</p>
+      </div>
+    </div>
+    <div style="margin-top:1rem;padding:1rem 1.25rem;background:rgba(201,168,76,0.07);border-left:3px solid var(--gold);font-size:0.85rem;color:var(--text-muted);line-height:1.7;">Las respuestas confirmaron que el cuello de botella est&aacute; en la recepci&oacute;n y que la soluci&oacute;n debe ser <strong style="color:var(--text);">digital, centralizada y en tiempo real</strong>.</div>
+  </div>
+
+</section>
+<section class="timeline-section" id="timeline">
+  <div class="timeline-inner">
+    <p class="section-label fade-up">Planificaci&oacute;n</p>
+    <h2 class="section-title fade-up">Cronograma del Proyecto</h2>
+    <div class="timeline fade-up">
+      <div class="timeline-step"><div class="step-num">01</div><div class="step-weeks">Semanas 1&ndash;2</div><div class="step-title">An&aacute;lisis y Diagn&oacute;stico</div></div>
+      <div class="timeline-step"><div class="step-num">02</div><div class="step-weeks">Semanas 3&ndash;4</div><div class="step-title">Dise&ntilde;o del Sistema y UI/UX</div></div>
+      <div class="timeline-step"><div class="step-num">03</div><div class="step-weeks">Semanas 5&ndash;9</div><div class="step-title">Desarrollo e Implementaci&oacute;n</div></div>
+      <div class="timeline-step"><div class="step-num">04</div><div class="step-weeks">Semanas 10&ndash;11</div><div class="step-title">Pruebas y Ajustes</div></div>
+      <div class="timeline-step"><div class="step-num">05</div><div class="step-weeks">Semana 12</div><div class="step-title">Presentaci&oacute;n Final</div></div>
+    </div>
+  </div>
+</section>
+<section id="fase2" style="background:var(--navy);padding:6rem 5rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p class="section-label fade-up" style="color:rgba(201,168,76,0.7);">Fase 2 del Proyecto</p>
+    <h2 class="section-title fade-up" style="color:var(--white);">Modelado, Dise&ntilde;o y Anal&iacute;tica</h2>
+    <p class="fade-up" style="color:rgba(255,255,255,0.65);font-size:1rem;line-height:1.85;max-width:800px;margin-top:1.5rem;">Esta segunda fase avanza desde el diagn&oacute;stico de la Semana 1 hacia el modelado de procesos, el dise&ntilde;o t&eacute;cnico de la soluci&oacute;n, la planificaci&oacute;n de recursos y la incorporaci&oacute;n de capacidades anal&iacute;ticas y gesti&oacute;n &aacute;gil.</p>
+    <div class="fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.15);margin-top:3rem;">
+      <div style="padding:1.5rem;background:var(--navy-mid);text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);">IDEF0</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.08em;">Sec. 11</div></div>
+      <div style="padding:1.5rem;background:var(--navy-mid);text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);">BPMN</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.08em;">Sec. 12</div></div>
+      <div style="padding:1.5rem;background:var(--navy-mid);text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);">UC</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.08em;">Sec. 13</div></div>
+      <div style="padding:1.5rem;background:var(--navy-mid);text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);">BI</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.08em;">Sec. 18</div></div>
+      <div style="padding:1.5rem;background:var(--navy-mid);text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);">WEKA</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.08em;">Sec. 19</div></div>
+      <div style="padding:1.5rem;background:var(--navy-mid);text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);">SCRUM</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.4rem;text-transform:uppercase;letter-spacing:0.08em;">Sec. 20</div></div>
+    </div>
+  </div>
+</section>
+<section id="idef0" style="padding:6rem 5rem;max-width:1200px;margin:0 auto;">
+  <p class="section-label fade-up">Secci&oacute;n 11</p>
+  <h2 class="section-title fade-up">Modelo de Proceso IDEF0</h2>
+  <p class="fade-up" style="color:var(--text-muted);font-size:1rem;line-height:1.85;max-width:750px;margin:1rem 0 2.5rem;">IDEF0 modela el proceso central del hotel descomponiendo la funci&oacute;n en sus <strong>Entradas, Controles, Salidas y Mecanismos (ICOM)</strong>.</p>
+  <div class="fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-bottom:3rem;">
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid #4A90D9;padding:1.5rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#4A90D9;margin-bottom:0.75rem;">&#8592; Entradas (Inputs)</div><ul style="list-style:none;font-size:0.88rem;color:var(--text-muted);line-height:1.9;"><li>&bull; Solicitud de reserva</li><li>&bull; Datos personales del hu&eacute;sped</li><li>&bull; Documento de identidad</li></ul></div>
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid #E8A838;padding:1.5rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#E8A838;margin-bottom:0.75rem;">&#8593; Controles</div><ul style="list-style:none;font-size:0.88rem;color:var(--text-muted);line-height:1.9;"><li>&bull; Pol&iacute;ticas de reservas y tarifas</li><li>&bull; Normas de hospedaje</li><li>&bull; Reglamento interno</li></ul></div>
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid #27AE60;padding:1.5rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#27AE60;margin-bottom:0.75rem;">&#8594; Salidas (Outputs)</div><ul style="list-style:none;font-size:0.88rem;color:var(--text-muted);line-height:1.9;"><li>&bull; Hu&eacute;sped registrado</li><li>&bull; Habitaci&oacute;n asignada</li><li>&bull; Factura electr&oacute;nica</li><li>&bull; Reportes de ocupaci&oacute;n</li></ul></div>
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:3px solid #8E44AD;padding:1.5rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#8E44AD;margin-bottom:0.75rem;">&#8595; Mecanismos</div><ul style="list-style:none;font-size:0.88rem;color:var(--text-muted);line-height:1.9;"><li>&bull; Recepcionista / Administrador</li><li>&bull; Sistema web</li><li>&bull; API REST</li><li>&bull; Base de datos</li></ul></div>
+  </div>
+  <h3 class="fade-up" style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:1.25rem;">Descomposici&oacute;n A1&ndash;A5</h3>
+  <div class="fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;border:1px solid rgba(0,0,0,0.08);">
+    <div style="padding:1.25rem 1rem;border-right:1px solid rgba(0,0,0,0.08);background:var(--white);"><div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:rgba(201,168,76,0.35);">A1</div><div style="font-size:0.85rem;font-weight:500;color:var(--navy);margin-top:0.3rem;">Gestionar Reserva</div></div>
+    <div style="padding:1.25rem 1rem;border-right:1px solid rgba(0,0,0,0.08);background:var(--white);"><div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:rgba(201,168,76,0.35);">A2</div><div style="font-size:0.85rem;font-weight:500;color:var(--navy);margin-top:0.3rem;">Registrar Hu&eacute;sped</div></div>
+    <div style="padding:1.25rem 1rem;border-right:1px solid rgba(0,0,0,0.08);background:var(--white);"><div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:rgba(201,168,76,0.35);">A3</div><div style="font-size:0.85rem;font-weight:500;color:var(--navy);margin-top:0.3rem;">Asignar Habitaci&oacute;n</div></div>
+    <div style="padding:1.25rem 1rem;border-right:1px solid rgba(0,0,0,0.08);background:var(--white);"><div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:rgba(201,168,76,0.35);">A4</div><div style="font-size:0.85rem;font-weight:500;color:var(--navy);margin-top:0.3rem;">Gestionar Estad&iacute;a</div></div>
+    <div style="padding:1.25rem 1rem;background:var(--white);"><div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:rgba(201,168,76,0.35);">A5</div><div style="font-size:0.85rem;font-weight:500;color:var(--navy);margin-top:0.3rem;">Generar Reportes</div></div>
+  </div>
+  <div class="fade-up" style="margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(201,168,76,0.07);border-left:3px solid var(--gold);"><p style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;"><strong style="color:var(--text);">Interpretaci&oacute;n:</strong> El modelo confirma que el proceso es predominantemente informacional, justificando un sistema de informaci&oacute;n. Los controles documentados anticipan que el sistema debe parametrizar tarifas y pol&iacute;ticas.</p></div>
+</section>
+<section id="bpmn" style="background:#F4F1EC;padding:6rem 5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label fade-up">Secci&oacute;n 12</p>
+    <h2 class="section-title fade-up">Modelo de Proceso BPMN</h2>
+    <p class="fade-up" style="color:var(--text-muted);font-size:1rem;line-height:1.85;max-width:750px;margin:1rem 0 2.5rem;">BPMN describe <strong>c&oacute;mo se ejecuta el proceso en el tiempo</strong>, con su secuencia de eventos, actividades y decisiones desde la reserva hasta la facturaci&oacute;n.</p>
+    <div class="fade-up" style="display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin-bottom:3rem;">
+      <div style="background:var(--navy);color:var(--white);padding:0.75rem 1.1rem;font-size:0.8rem;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">&#9654;</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.1);padding:0.6rem 1rem;font-size:0.8rem;color:var(--text);">Solicitar Reserva</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:#FFF8E7;border:2px solid var(--gold);padding:0.6rem 1rem;font-size:0.75rem;color:var(--text);">&#9670; &iquest;Disponibilidad?</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.1);padding:0.6rem 1rem;font-size:0.8rem;color:var(--text);">Registrar &amp; Confirmar</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.1);padding:0.6rem 1rem;font-size:0.8rem;color:var(--text);">Check-in</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:#FFF8E7;border:2px solid var(--gold);padding:0.6rem 1rem;font-size:0.75rem;color:var(--text);">&#9670; &iquest;Datos v&aacute;lidos?</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.1);padding:0.6rem 1rem;font-size:0.8rem;color:var(--text);">Asignar Hab. &rarr; Estad&iacute;a</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.1);padding:0.6rem 1rem;font-size:0.8rem;color:var(--text);">Check-out &amp; Factura</div>
+      <div style="color:var(--gold);font-size:1.2rem;">&rarr;</div>
+      <div style="background:var(--navy);color:var(--white);padding:0.75rem;font-size:0.8rem;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">&#9632;</div>
+    </div>
+    <h3 class="fade-up" style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:1rem;">Elementos identificados</h3>
+    <div class="fade-up" style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.88rem;background:var(--white);">
+        <thead><tr style="background:var(--navy);color:var(--white);"><th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Tipo</th><th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Elementos del proceso</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,0.06);"><td style="padding:0.85rem 1.2rem;font-weight:500;color:var(--navy);">Eventos</td><td style="padding:0.85rem 1.2rem;color:var(--text-muted);">Inicio (solicitud de reserva); Fin por no disponibilidad; Fin del ciclo tras facturaci&oacute;n.</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.015);"><td style="padding:0.85rem 1.2rem;font-weight:500;color:var(--navy);">Actividades</td><td style="padding:0.85rem 1.2rem;color:var(--text-muted);">Solicitar reserva, registrar reserva, confirmar por correo, check-in, asignar habitaci&oacute;n, estad&iacute;a, check-out, generar factura, actualizar estado.</td></tr>
+          <tr><td style="padding:0.85rem 1.2rem;font-weight:500;color:var(--navy);">Compuertas (decisiones)</td><td style="padding:0.85rem 1.2rem;color:var(--text-muted);">&iquest;Hay disponibilidad? &middot; &iquest;Datos del hu&eacute;sped v&aacute;lidos?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fade-up" style="margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(201,168,76,0.07);border-left:3px solid var(--gold);"><p style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;"><strong style="color:var(--text);">Interpretaci&oacute;n:</strong> Las dos compuertas neutralizan las causas del Ishikawa: la de disponibilidad ataca la sobreventa; la de validaci&oacute;n impide check-in con informaci&oacute;n inconsistente.</p></div>
+  </div>
+</section>
+<section id="casos-uso" style="padding:6rem 5rem;max-width:1200px;margin:0 auto;">
+  <p class="section-label fade-up">Secci&oacute;n 13</p>
+  <h2 class="section-title fade-up">Diagrama de Casos de Uso</h2>
+  <p class="fade-up" style="color:var(--text-muted);font-size:1rem;line-height:1.85;max-width:750px;margin:1rem 0 2.5rem;">Se reconocen <strong>5 actores</strong> y <strong>10 casos de uso</strong>.</p>
+  <div class="fade-up" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:3rem;">
+    <span style="background:var(--navy);color:var(--white);padding:0.5rem 1.1rem;font-size:0.82rem;border-radius:2px;">&#128100; Hu&eacute;sped</span>
+    <span style="background:var(--navy);color:var(--white);padding:0.5rem 1.1rem;font-size:0.82rem;border-radius:2px;">&#128100; Recepcionista</span>
+    <span style="background:var(--navy);color:var(--white);padding:0.5rem 1.1rem;font-size:0.82rem;border-radius:2px;">&#128100; Administrador</span>
+    <span style="background:var(--navy);color:var(--white);padding:0.5rem 1.1rem;font-size:0.82rem;border-radius:2px;">&#128100; Gerente</span>
+    <span style="background:var(--navy);color:var(--white);padding:0.5rem 1.1rem;font-size:0.82rem;border-radius:2px;">&#128100; Personal de Limpieza</span>
+  </div>
+  <div class="fade-up" style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.86rem;background:var(--white);">
+      <thead><tr style="background:var(--navy);color:var(--white);"><th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Actor</th><th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Caso de Uso</th><th style="padding:0.85rem 1.2rem;text-align:left;font-weight:500;">Descripci&oacute;n</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);"><td style="padding:0.75rem 1.2rem;color:var(--gold-dark);font-weight:500;">Hu&eacute;sped</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Realizar reserva en l&iacute;nea</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Selecciona fechas y tipo de habitaci&oacute;n, y registra una reserva desde la web.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.015);"><td style="padding:0.75rem 1.2rem;color:var(--gold-dark);font-weight:500;">Hu&eacute;sped</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Registrar hu&eacute;sped</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Aporta sus datos personales y de identidad para el alta en el sistema.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);"><td style="padding:0.75rem 1.2rem;color:#2980B9;font-weight:500;">Recepcionista</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Efectuar check-in</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Recupera la reserva y formaliza el ingreso del hu&eacute;sped al hotel.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.015);"><td style="padding:0.75rem 1.2rem;color:#2980B9;font-weight:500;">Recepcionista</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Check-out / facturar</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Cierra la estancia y genera la factura electr&oacute;nica.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);"><td style="padding:0.75rem 1.2rem;color:#2980B9;font-weight:500;">Recepcionista</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Consultar disponibilidad</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Verifica en tiempo real el estado de las 59 habitaciones.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.015);"><td style="padding:0.75rem 1.2rem;color:#2980B9;font-weight:500;">Recepcionista</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Asignar habitaci&oacute;n</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Adjudica una habitaci&oacute;n disponible del tipo solicitado.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);"><td style="padding:0.75rem 1.2rem;color:#8E44AD;font-weight:500;">Administrador</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Gestionar habitaciones y tarifas</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Da de alta, edita o inactiva habitaciones y define tarifas.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);background:rgba(0,0,0,0.015);"><td style="padding:0.75rem 1.2rem;color:#8E44AD;font-weight:500;">Administrador</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Administrar usuarios y roles</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Crea cuentas y asigna permisos seg&uacute;n el rol de cada usuario.</td></tr>
+        <tr style="border-bottom:1px solid rgba(0,0,0,0.06);"><td style="padding:0.75rem 1.2rem;color:#27AE60;font-weight:500;">Personal Limpieza</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Actualizar estado de habitaci&oacute;n</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Marca la habitaci&oacute;n como limpia, en limpieza o en mantenimiento.</td></tr>
+        <tr><td style="padding:0.75rem 1.2rem;color:#E67E22;font-weight:500;">Gerente</td><td style="padding:0.75rem 1.2rem;color:var(--navy);">Generar reportes de gesti&oacute;n</td><td style="padding:0.75rem 1.2rem;color:var(--text-muted);">Obtiene reportes de ocupaci&oacute;n, ingresos y clientes frecuentes.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="fade-up" style="margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(201,168,76,0.07);border-left:3px solid var(--gold);"><p style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;"><strong style="color:var(--text);">Interpretaci&oacute;n:</strong> La Recepcionista concentra 6 casos de uso. Optimizar su interacci&oacute;n es la palanca de mayor impacto.</p></div>
+</section>
+<section id="recursos" style="background:var(--navy);padding:6rem 5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label fade-up" style="color:rgba(201,168,76,0.7);">Secciones 14 y 15</p>
+    <h2 class="section-title fade-up" style="color:var(--white);">Recursos y Arquitectura Tecnol&oacute;gica</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start;">
+      <div class="fade-up">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:1.25rem;">Equipo del Proyecto</h3>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);padding:0.85rem 1.1rem;font-size:0.85rem;color:rgba(255,255,255,0.8);">&#127919; L&iacute;der / Scrum Master &mdash; Planificaci&oacute;n y coordinaci&oacute;n</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);padding:0.85rem 1.1rem;font-size:0.85rem;color:rgba(255,255,255,0.8);">&#128208; Analista de Sistemas &mdash; Modelado y requisitos</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);padding:0.85rem 1.1rem;font-size:0.85rem;color:rgba(255,255,255,0.8);">&#9881;&#65039; Desarrollador Backend &mdash; API REST y seguridad</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);padding:0.85rem 1.1rem;font-size:0.85rem;color:rgba(255,255,255,0.8);">&#127912; Desarrollador Frontend &mdash; Interfaz web responsiva</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);padding:0.85rem 1.1rem;font-size:0.85rem;color:rgba(255,255,255,0.8);">&#128451;&#65039; Administrador BD &mdash; Dise&ntilde;o relacional y respaldos</div>
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.15);padding:0.85rem 1.1rem;font-size:0.85rem;color:rgba(255,255,255,0.8);">&#128221; Documentaci&oacute;n / QA &mdash; Pruebas e informe final</div>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem 1.2rem;background:rgba(201,168,76,0.1);border-left:3px solid var(--gold);"><p style="font-size:0.83rem;color:rgba(255,255,255,0.65);line-height:1.7;">&#128176; <strong style="color:var(--gold);">Costo total Fase Acad&eacute;mica:</strong> &asymp; Bs 530 &mdash; apoyado en software 100% c&oacute;digo abierto.</p></div>
+      </div>
+      <div class="fade-up">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:1.25rem;">Arquitectura en 3 Capas</h3>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <div style="background:rgba(41,128,185,0.2);border:1px solid rgba(41,128,185,0.4);padding:1rem 1.2rem;border-radius:2px;"><div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#5DADE2;margin-bottom:0.4rem;">Capa de Presentaci&oacute;n</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.8);">React / Vue &middot; HTML5 &middot; CSS3 &middot; Navegador</div></div>
+          <div style="text-align:center;color:var(--gold);font-size:1.2rem;">&#8597; HTTPS / JSON REST</div>
+          <div style="background:rgba(39,174,96,0.2);border:1px solid rgba(39,174,96,0.4);padding:1rem 1.2rem;border-radius:2px;"><div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#58D68D;margin-bottom:0.4rem;">Capa de L&oacute;gica de Negocio</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.8);">Node.js + Express / Django &middot; Auth JWT</div></div>
+          <div style="text-align:center;color:var(--gold);font-size:1.2rem;">&#8597; SQL</div>
+          <div style="background:rgba(142,68,173,0.2);border:1px solid rgba(142,68,173,0.4);padding:1rem 1.2rem;border-radius:2px;"><div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#BB8FCE;margin-bottom:0.4rem;">Capa de Datos</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.8);">MySQL 8 / PostgreSQL 15 &middot; NAS Respaldos</div></div>
+          <div style="text-align:center;color:var(--gold);font-size:1.2rem;">&#8597; LAN</div>
+          <div style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);padding:0.85rem 1.2rem;border-radius:2px;"><div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:#F1948A;margin-bottom:0.3rem;">Red e Internet</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.8);">Apache/Nginx &middot; Switch &middot; Router &middot; Firewall</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="ia-contexto" style="padding:6rem 5rem;max-width:1200px;margin:0 auto;">
+  <p class="section-label fade-up">Secciones 16 y 17</p>
+  <h2 class="section-title fade-up">IA para Requisitos y Contexto de Desarrollo</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start;">
+    <div class="fade-up">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:0.75rem;">NotebookLM &mdash; Sec. 16</h3>
+      <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;margin-bottom:1.5rem;">Asistente IA de Google (Gemini) que razona sobre fuentes propias. Permite derivar requisitos funcionales trazables desde la documentaci&oacute;n real del hotel.</p>
+      <div style="display:flex;flex-direction:column;gap:0.6rem;">
+        <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-left:3px solid #4285F4;padding:0.9rem 1.1rem;"><div style="font-size:0.75rem;color:#4285F4;font-weight:500;margin-bottom:0.25rem;">RF-01</div><div style="font-size:0.83rem;color:var(--text);">Registro de hu&eacute;sped con validaci&oacute;n de datos</div></div>
+        <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-left:3px solid #4285F4;padding:0.9rem 1.1rem;"><div style="font-size:0.75rem;color:#4285F4;font-weight:500;margin-bottom:0.25rem;">RF-03</div><div style="font-size:0.83rem;color:var(--text);">Reservas con reglas de cancelaci&oacute;n y no-show</div></div>
+        <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-left:3px solid #4285F4;padding:0.9rem 1.1rem;"><div style="font-size:0.75rem;color:#4285F4;font-weight:500;margin-bottom:0.25rem;">RF-06</div><div style="font-size:0.83rem;color:var(--text);">Control de estados de habitaci&oacute;n en tiempo real</div></div>
+        <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-left:3px solid #4285F4;padding:0.9rem 1.1rem;"><div style="font-size:0.75rem;color:#4285F4;font-weight:500;margin-bottom:0.25rem;">RF-07</div><div style="font-size:0.83rem;color:var(--text);">Gesti&oacute;n de tarifas por tipo y temporada</div></div>
+        <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-left:3px solid #4285F4;padding:0.9rem 1.1rem;"><div style="font-size:0.75rem;color:#4285F4;font-weight:500;margin-bottom:0.25rem;">RF-10</div><div style="font-size:0.83rem;color:var(--text);">Reportes de gesti&oacute;n para gerencia</div></div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:0.75rem;">Gapminder / PNUD &mdash; Sec. 17</h3>
+      <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;margin-bottom:1.5rem;">Indicadores de Bolivia que justifican la pertinencia del proyecto a nivel socioecon&oacute;mico y de desarrollo humano.</p>
+      <div style="display:flex;flex-direction:column;gap:0.6rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:0.85rem 1.1rem;"><span style="font-size:0.85rem;color:var(--text);">IDH Bolivia</span><span style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);">&asymp; 0.69</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:0.85rem 1.1rem;"><span style="font-size:0.85rem;color:var(--text);">Usuarios de Internet</span><span style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);">&asymp; 66%</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:0.85rem 1.1rem;"><span style="font-size:0.85rem;color:var(--text);">Turismo / PIB</span><span style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);">3&ndash;4%</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:0.85rem 1.1rem;"><span style="font-size:0.85rem;color:var(--text);">Telefon&iacute;a m&oacute;vil</span><span style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);">&gt;100/100</span></div>
+      </div>
+      <div style="margin-top:1rem;padding:0.85rem 1.1rem;background:rgba(201,168,76,0.07);border-left:3px solid var(--gold);font-size:0.83rem;color:var(--text-muted);line-height:1.7;">Alineado con los ODS 8 (trabajo y crecimiento) y ODS 9 (innovaci&oacute;n e infraestructura).</div>
+    </div>
+  </div>
+</section>
+<section id="bi" style="background:#F4F1EC;padding:6rem 5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label fade-up">Secci&oacute;n 18</p>
+    <h2 class="section-title fade-up">Business Intelligence con Tableau</h2>
+    <p class="fade-up" style="color:var(--text-muted);font-size:1rem;line-height:1.85;max-width:750px;margin:1rem 0 3rem;">Tableau transforma el dato operativo del check-in en inteligencia de negocio mediante KPI y dashboards.</p>
+    <div class="fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:3rem;">
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--navy);">Bs 26.460</div><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:0.3rem;">Ingreso Total (muestra)</div></div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--navy);">Bs 882</div><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:0.3rem;">Ingreso prom. por reserva</div></div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--navy);">2.7</div><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:0.3rem;">Estad&iacute;a promedio (noches)</div></div>
+      <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:1.5rem;text-align:center;"><div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--navy);">&asymp;65%</div><div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:0.3rem;">Tasa de ocupaci&oacute;n ref.</div></div>
+    </div>
+    <h3 class="fade-up" style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:1.25rem;">Ocupaci&oacute;n Mensual (noches vendidas)</h3>
+    <div class="fade-up" style="background:var(--white);border:1px solid rgba(0,0,0,0.07);padding:2rem;">
+      <div style="display:flex;align-items:flex-end;gap:0.6rem;height:140px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--navy);width:100%;height:79%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Ene</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">11</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--gold);width:100%;height:21%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Feb</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">3</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--navy);width:100%;height:64%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Mar</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">9</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--navy);width:100%;height:50%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Abr</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">7</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--gold);width:100%;height:29%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">May</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">4</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:#C0392B;width:100%;height:100%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Jun</span><span style="font-size:0.65rem;font-weight:600;color:#C0392B;">14</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--navy);width:100%;height:50%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Jul</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">7</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--gold);width:100%;height:21%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Ago</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">3</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--navy);width:100%;height:50%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Sep</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">7</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:var(--navy);width:100%;height:29%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Oct</span><span style="font-size:0.65rem;font-weight:600;color:var(--navy);">4</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.4rem;flex:1;"><div style="background:#C0392B;width:100%;height:86%;"></div><span style="font-size:0.65rem;color:var(--text-muted);">Nov</span><span style="font-size:0.65rem;font-weight:600;color:#C0392B;">12</span></div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem;">&#128308; Picos en Junio y Noviembre &mdash; temporada alta recomendada para tarifas din&aacute;micas.</p>
+    </div>
+  </div>
+</section>
+<section id="weka" style="padding:6rem 5rem;max-width:1200px;margin:0 auto;">
+  <p class="section-label fade-up">Secci&oacute;n 19</p>
+  <h2 class="section-title fade-up">Miner&iacute;a de Datos con WEKA</h2>
+  <p class="fade-up" style="color:var(--text-muted);font-size:1rem;line-height:1.85;max-width:750px;margin:1rem 0 3rem;">Si Tableau describe lo que ocurri&oacute;, WEKA <strong>anticipa lo que ocurrir&aacute;</strong> y descubre patrones ocultos. Se aplican 3 t&eacute;cnicas sobre el historial de 40 hu&eacute;spedes.</p>
+  <div class="fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:4px solid #2980B9;padding:2rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#2980B9;margin-bottom:0.75rem;">Clasificaci&oacute;n</div><h4 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy);margin-bottom:0.75rem;">&Aacute;rbol J48 (C4.5)</h4><p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Predice si un hu&eacute;sped har&aacute; reserva anticipada. Precisi&oacute;n esperada: <strong>70&ndash;85%</strong>.</p><div style="background:#EBF5FB;padding:0.75rem 1rem;font-size:0.8rem;color:#2980B9;font-family:monospace;">SI temporada=Alta AND monto&gt;500 &rarr; reserva_anticipada=S&iacute;</div></div>
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:4px solid #27AE60;padding:2rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#27AE60;margin-bottom:0.75rem;">Agrupamiento</div><h4 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy);margin-bottom:0.75rem;">SimpleKMeans (k=3)</h4><p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Segmenta hu&eacute;spedes en 3 perfiles:</p><div style="display:flex;flex-direction:column;gap:0.4rem;font-size:0.82rem;"><div style="background:#EAFAF1;padding:0.5rem 0.75rem;color:#27AE60;">&#127991; Estancia corta y econ&oacute;mica</div><div style="background:#EAFAF1;padding:0.5rem 0.75rem;color:#27AE60;">&#128106; Familiar &mdash; habitaciones triples</div><div style="background:#EAFAF1;padding:0.5rem 0.75rem;color:#27AE60;">&#11088; Premium &mdash; suites y montos altos</div></div></div>
+    <div style="background:var(--white);border:1px solid rgba(0,0,0,0.07);border-top:4px solid #8E44AD;padding:2rem;"><div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#8E44AD;margin-bottom:0.75rem;">Asociaci&oacute;n</div><h4 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy);margin-bottom:0.75rem;">Apriori</h4><p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Descubre reglas con confianza &gt; 0.8, sustentando tarifas din&aacute;micas y fidelizaci&oacute;n.</p><div style="background:#F5EEF8;padding:0.75rem 1rem;font-size:0.8rem;color:#8E44AD;font-family:monospace;">temporada=Alta &rarr; reserva_anticipada=S&iacute; [conf: 0.85]</div></div>
+  </div>
+</section>
+<section id="scrum" style="background:var(--navy);padding:6rem 5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-label fade-up" style="color:rgba(201,168,76,0.7);">Secci&oacute;n 20</p>
+    <h2 class="section-title fade-up" style="color:var(--white);">Gesti&oacute;n &Aacute;gil con SCRUM</h2>
+    <p class="fade-up" style="color:rgba(255,255,255,0.65);font-size:1rem;line-height:1.85;max-width:750px;margin:1rem 0 3rem;">20 historias de usuario distribuidas en 4 Sprints (90 puntos totales).</p>
+    <div class="fade-up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:3rem;">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);padding:1.5rem;"><div style="font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Sprint 1 &middot; Sem. 2&ndash;3</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:0.5rem;">18 pts</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.6);">N&uacute;cleo de registro y datos</div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);padding:1.5rem;"><div style="font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Sprint 2 &middot; Sem. 4&ndash;5</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:0.5rem;">29 pts</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.6);">Reservas y disponibilidad</div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);padding:1.5rem;"><div style="font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Sprint 3 &middot; Sem. 6&ndash;7</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:0.5rem;">19 pts</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.6);">Check-in/out y estados</div></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);padding:1.5rem;"><div style="font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Sprint 4 &middot; Sem. 8&ndash;9</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:0.5rem;">24 pts</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.6);">Reportes, BI y cierre</div></div>
+    </div>
+    <h3 class="fade-up" style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:1.25rem;">Burndown Chart</h3>
+    <div class="fade-up" style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);padding:2rem;">
+      <div style="display:flex;gap:2rem;margin-bottom:1rem;font-size:0.78rem;"><span style="color:var(--gold);">&mdash; Ideal</span><span style="color:#5DADE2;">&mdash; Real estimado</span></div>
+      <div style="position:relative;height:100px;border-left:1px solid rgba(255,255,255,0.15);border-bottom:1px solid rgba(255,255,255,0.15);">
+        <svg width="100%" height="100%" viewBox="0 0 400 100" preserveAspectRatio="none">
+          <line x1="0" y1="0" x2="400" y2="100" stroke="rgba(201,168,76,0.7)" stroke-width="2" stroke-dasharray="6,3"/>
+          <polyline points="0,0 100,25 200,44 300,71 400,100" fill="none" stroke="#5DADE2" stroke-width="2.5"/>
+          <circle cx="0" cy="0" r="4" fill="#5DADE2"/><circle cx="100" cy="25" r="4" fill="#5DADE2"/>
+          <circle cx="200" cy="44" r="4" fill="#5DADE2"/><circle cx="300" cy="71" r="4" fill="#5DADE2"/>
+          <circle cx="400" cy="100" r="4" fill="#5DADE2"/>
+        </svg>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:0.5rem;"><span>Inicio (90 pts)</span><span>Fin S1</span><span>Fin S2</span><span>Fin S3</span><span>Fin S4 (0 pts)</span></div>
+    </div>
+  </div>
+</section>
+<section id="conclusiones" style="padding:6rem 5rem;max-width:1200px;margin:0 auto;">
+  <p class="section-label fade-up">Secciones 21 y 22</p>
+  <h2 class="section-title fade-up">Conclusiones y Recomendaciones</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start;">
+    <div class="fade-up">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:1.5rem;">12 Conclusiones</h3>
+      <div style="display:flex;flex-direction:column;gap:0.6rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:0.85rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;">1.</span><span style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">El proceso es esencialmente <strong style="color:var(--text);">informacional</strong>: justifica un sistema de informaci&oacute;n.</span></div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:0.85rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;">2.</span><span style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">Las <strong style="color:var(--text);">2 compuertas BPMN</strong> neutralizan la sobreventa y los errores de registro.</span></div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:0.85rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;">3.</span><span style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">La <strong style="color:var(--text);">Recepcionista concentra 6 casos de uso</strong> &mdash; optimizarla es la palanca de mayor impacto.</span></div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:0.85rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;">4.</span><span style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">El proyecto es <strong style="color:var(--text);">econ&oacute;micamente viable</strong> con c&oacute;digo abierto &mdash; costo &asymp; Bs 530.</span></div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:0.85rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;">5.</span><span style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">La arquitectura 3 capas responde directamente a los <strong style="color:var(--text);">objetivos SMART</strong>.</span></div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;padding:0.85rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);"><span style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);flex-shrink:0;">6&ndash;12.</span><span style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">NotebookLM, Gapminder, Tableau, WEKA y SCRUM confirman trazabilidad completa. Impacto esperado: <strong style="color:var(--text);">-60% check-in / -90% errores</strong>.</span></div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);margin-bottom:1.5rem;">12 Recomendaciones</h3>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #E74C3C;font-size:0.82rem;color:var(--text);">&#128274; Seguridad: JWT, HTTPS, hash, protecci&oacute;n SQL/XSS</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #3498DB;font-size:0.82rem;color:var(--text);">&#128200; Escalabilidad: &iacute;ndices, paginaci&oacute;n, API versionada</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #F39C12;font-size:0.82rem;color:var(--text);">&#128190; Respaldos autom&aacute;ticos diarios con pruebas de restauraci&oacute;n</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #9B59B6;font-size:0.82rem;color:var(--text);">&#129302; IA: predicci&oacute;n de demanda y tarifas din&aacute;micas (WEKA)</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #1ABC9C;font-size:0.82rem;color:var(--text);">&#128202; Tableau avanzado: RevPAR y ADR para comparativa sectorial</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #27AE60;font-size:0.82rem;color:var(--text);">&#128241; App m&oacute;vil para hu&eacute;spedes y personal de limpieza</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #E67E22;font-size:0.82rem;color:var(--text);">&#128279; Integraciones: Booking, Expedia, pasarelas de pago</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #2980B9;font-size:0.82rem;color:var(--text);">&#9925;&#65039; Cloud Computing para alta disponibilidad y elasticidad</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #8E44AD;font-size:0.82rem;color:var(--text);">&#127912; UX responsiva que minimice curva de aprendizaje</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #2C3E50;font-size:0.82rem;color:var(--text);">&#128203; Auditor&iacute;a y monitoreo del servidor (logs de acciones)</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid #C0392B;font-size:0.82rem;color:var(--text);">&#129534; Facturaci&oacute;n electr&oacute;nica integrada (normativa boliviana)</div>
+        <div style="display:flex;gap:0.75rem;align-items:center;padding:0.7rem 1rem;background:var(--white);border:1px solid rgba(0,0,0,0.06);border-left:3px solid var(--gold);font-size:0.82rem;color:var(--text);">&#11088; M&oacute;dulo de fidelizaci&oacute;n basado en segmentaci&oacute;n WEKA</div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <p>Portafolio de <span>Grupo 6 &ndash; Los de Siempre</span> &middot; Gesti&oacute;n de Tecnolog&iacute;as de la Informaci&oacute;n &middot; 2025</p>
+</footer>
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
